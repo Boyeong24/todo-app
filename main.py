@@ -7,12 +7,17 @@ def main():
         print("2. Show Tasks")
         print("3. Delete Task")
         print("4. Edit Task")
-        print("5. Exit")
+        print("5. Complete Task")
+        print("6. Exit")
 
         choice=input("Choose: ")
 
         if choice=="1":
-            task=input("Enter task: ")
+            task_name=input("Enter task: ")
+            task={
+                "name": task_name,
+                "completed":False
+            }
             tasks.append(task)
             print("Task added!")
 
@@ -23,7 +28,10 @@ def main():
                 print("No tasks yet")
             else:
                 for number, task in enumerate(tasks, start=1):
-                    print(f"{number}. {task}")
+                    if task["completed"]:
+                        print(f"{number}. [✓] {task['name']}")
+                    else:
+                        print(f"{number}. [ ] {task['name']}")
 
         elif choice=="3":
             if len(tasks)==0:
@@ -44,13 +52,26 @@ def main():
                     print("Task edited!")
                 else:
                     print("Invalid task number.")
-                
-        elif choice=="5":
+
+        elif choice == "5":
+            if len(tasks)==0:
+                print("No tasks yet.")
+
+            else:
+                complete_num=int(input("Complete number: "))
+
+                if 1<= complete_num <= len(tasks):
+                    tasks[complete_num-1]["completed"]=True
+                    print("Task completed!")
+                else:
+                    print("Invalid task number.")
+
+        elif choice=="6":
             print("Goodbye!")
             break
 
         else:
-            print("Please choose 1, 2, or 3.")
+            print("Please choose 1-6.")
     
 if __name__=="__main__":
     main()
